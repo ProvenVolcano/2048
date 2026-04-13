@@ -9,15 +9,18 @@ interface TileGridProps {
 }
 
 function TileGrid(props: TileGridProps) {
-    const [values, setValues] = useState<number[][]>([
-        [2, 0, 0, 0],
-        [0, 2, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]
-    ]);
+    let canSpawnNew = false;
+
+    function initializeNumbers(){
+        let grid = Array.from({ length: 4 }, () => Array(4).fill(0));
+        grid = addNewTiles(grid);
+        grid = addNewTiles(grid);
+        return grid;
+    }
+
+    const [values, setValues] = useState<number[][]>(initializeNumbers());
     const [score, setScore] = useState(0);
     let nextScore = 0;
-    let canSpawnNew = false;
 
     function valuesToTiles(newVals: number[][]) {
         const temp: TileType[] = [];
@@ -54,7 +57,10 @@ function TileGrid(props: TileGridProps) {
             default:
                 return;
         }
-        setValues(addNewTiles(newNumbers));
+        if (canSpawnNew) {
+            setValues(addNewTiles(newNumbers));
+        } else setValues(newNumbers)
+
         setScore(score + nextScore);
         props.setScore(score + nextScore);
     }
@@ -117,9 +123,6 @@ function TileGrid(props: TileGridProps) {
     }
     
     function addNewTiles(tiles: number[][]) {
-        if (!canSpawnNew) {
-            return tiles;
-        }
 
         const zeroTiles = []
         for (let i = 0; i < 4; i++) {
