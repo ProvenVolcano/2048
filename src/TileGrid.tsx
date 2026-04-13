@@ -10,13 +10,14 @@ interface TileGridProps {
 
 function TileGrid(props: TileGridProps) {
     const [values, setValues] = useState<number[][]>([
-        [2, 0, 0, 2],
-        [0, 2, 4, 0],
+        [2, 0, 0, 0],
+        [0, 2, 0, 0],
         [0, 0, 0, 0],
-        [0, 0, 8, 0]
+        [0, 0, 0, 0]
     ]);
     const [score, setScore] = useState(0);
     let nextScore = 0;
+    let canSpawnNew = false;
 
     function valuesToTiles(newVals: number[][]) {
         const temp: TileType[] = [];
@@ -53,7 +54,7 @@ function TileGrid(props: TileGridProps) {
             default:
                 return;
         }
-        setValues(newNumbers);
+        setValues(addNewTiles(newNumbers));
         setScore(score + nextScore);
         props.setScore(score + nextScore);
     }
@@ -107,7 +108,37 @@ function TileGrid(props: TileGridProps) {
         while (result.length < 4) {
             result.push(0);
         }
+        for (let i = 0; i < 4; i++) {
+            if (line[i] != result[i]) {
+                canSpawnNew = true;
+            }
+        }
         return result;
+    }
+    
+    function addNewTiles(tiles: number[][]) {
+        if (!canSpawnNew) {
+            return tiles;
+        }
+
+        const zeroTiles = []
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) {
+                if (tiles[i][j] == 0) {
+                    zeroTiles.push({y: i, x: j});
+                }
+            }
+        }
+
+        if (zeroTiles.length == 0) {
+            // GAME OVER
+            return tiles;
+        }
+
+        const index = Math.floor(Math.random() * zeroTiles.length);
+        const newTiles = tiles.map(row => [...row]);
+        newTiles[zeroTiles[index].y][zeroTiles[index].x] = Math.random() < 0.9 ? 2 : 4;
+        return newTiles;
     }
 
     useEffect(() => {
