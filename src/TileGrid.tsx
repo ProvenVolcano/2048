@@ -4,14 +4,19 @@ import "./TileGridStyle.css";
 import {useState} from "react";
 import {useEffect} from "react";
 
+interface TileGridProps {
+    setScore: (score: number) => void;
+}
 
-function TileGrid() {
+function TileGrid(props: TileGridProps) {
     const [values, setValues] = useState<number[][]>([
         [2, 0, 0, 2],
         [0, 2, 4, 0],
         [0, 0, 0, 0],
         [0, 0, 8, 0]
     ]);
+    const [score, setScore] = useState(0);
+    let nextScore = 0;
 
     function valuesToTiles(newVals: number[][]) {
         const temp: TileType[] = [];
@@ -49,6 +54,8 @@ function TileGrid() {
                 return;
         }
         setValues(newNumbers);
+        setScore(score + nextScore);
+        props.setScore(score + nextScore);
     }
 
     function moveVertical(up: boolean) {
@@ -91,6 +98,7 @@ function TileGrid() {
         for (let i = 0; i < noZero.length; i++) {
             if (noZero[i] == noZero[i + 1]) {
                 result.push(noZero[i] * 2);
+                nextScore += noZero[i] * 2;
                 i++;
             } else {
                 result.push(noZero[i]);
