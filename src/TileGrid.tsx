@@ -6,6 +6,7 @@ import {useEffect} from "react";
 
 interface TileGridProps {
     setScore: (score: number) => void;
+    setGameOver: (gameOver: boolean) => void;
 }
 
 function TileGrid(props: TileGridProps) {
@@ -37,6 +38,25 @@ function TileGrid(props: TileGridProps) {
         return temp;
     }
 
+    function isGameOver(tiles: number[][]) {
+        let gameOver = true;
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (tiles[i][j] == tiles[i][j+1]) {
+                    gameOver = false;
+                }
+            }
+        }
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (tiles[j][i] == tiles[j + 1][i]) {
+                    gameOver = false;
+                }
+            }
+        }
+        return gameOver;
+    }
+
     const tiles = valuesToTiles(values);
 
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -59,8 +79,10 @@ function TileGrid(props: TileGridProps) {
         }
         if (canSpawnNew) {
             setValues(addNewTiles(newNumbers));
-        } else setValues(newNumbers)
-
+        } else {
+            setValues(newNumbers)
+            props.setGameOver(isGameOver(newNumbers));
+        }
         setScore(score + nextScore);
         props.setScore(score + nextScore);
     }
@@ -134,7 +156,6 @@ function TileGrid(props: TileGridProps) {
         }
 
         if (zeroTiles.length == 0) {
-            // GAME OVER
             return tiles;
         }
 
