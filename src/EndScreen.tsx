@@ -1,6 +1,7 @@
 interface EndScreenProps {
     score: number;
     draw: boolean;
+    restartGame: () => void;
 }
 
 function EndScreen(props: EndScreenProps) {
@@ -13,7 +14,9 @@ function EndScreen(props: EndScreenProps) {
             <div>
                 <p>Game Over</p>
                 <p>Score: {props.score}</p>
-                <button>New game</button>
+                <button onClick={() => {
+                    props.restartGame();
+                }}>New game</button>
             </div>
         </>
     )

@@ -3,10 +3,10 @@ import {Tile} from "./Tile.tsx";
 import "./TileGridStyle.css";
 import {useState} from "react";
 import {useEffect} from "react";
+import EndScreen from "./EndScreen.tsx";
 
 interface TileGridProps {
     setScore: (score: number) => void;
-    setGameOver: (gameOver: boolean) => void;
 }
 
 function TileGrid(props: TileGridProps) {
@@ -21,7 +21,15 @@ function TileGrid(props: TileGridProps) {
 
     const [values, setValues] = useState<number[][]>(initializeNumbers());
     const [score, setScore] = useState(0);
+    const [gameOver, setGameOver] = useState(false);
     let nextScore = 0;
+
+    const resetGame = () => {
+        setValues(initializeNumbers());
+        setScore(0);
+        setGameOver(false);
+        props.setScore(0)
+    };
 
     function valuesToTiles(newVals: number[][]) {
         const temp: TileType[] = [];
@@ -81,7 +89,7 @@ function TileGrid(props: TileGridProps) {
             setValues(addNewTiles(newNumbers));
         } else {
             setValues(newNumbers)
-            props.setGameOver(isGameOver(newNumbers));
+            setGameOver(isGameOver(newNumbers));
         }
         setScore(score + nextScore);
         props.setScore(score + nextScore);
@@ -171,11 +179,14 @@ function TileGrid(props: TileGridProps) {
     }, [values]);
 
     return (
-        <div className="grid">
-            {tiles.map((tile, index) => (
-                <Tile key={index} value={tile}/>
-            ))}
-        </div>
+        <>
+            <div className="grid">
+                {tiles.map((tile, index) => (
+                    <Tile key={index} value={tile}/>
+                ))}
+            </div>
+            <EndScreen score={score} draw={gameOver} restartGame={resetGame}></EndScreen>
+        </>
     );
 }
 
