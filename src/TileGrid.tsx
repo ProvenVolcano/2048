@@ -11,7 +11,6 @@ interface TileGridProps {
 
 function TileGrid(props: TileGridProps) {
     let canSpawnNew = false;
-
     function initializeNumbers(){
         let grid = Array.from({ length: 4 }, () => Array(4).fill(0));
         grid = addNewTiles(grid);
@@ -49,6 +48,11 @@ function TileGrid(props: TileGridProps) {
     function isGameOver(tiles: number[][]) {
         let gameOver = true;
         for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) {
+                if (tiles[i][j] === 0) return false;
+            }
+        }
+        for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 3; j++) {
                 if (tiles[i][j] == tiles[i][j+1]) {
                     gameOver = false;
@@ -85,12 +89,9 @@ function TileGrid(props: TileGridProps) {
             default:
                 return;
         }
-        if (canSpawnNew) {
-            setValues(addNewTiles(newNumbers));
-        } else {
-            setValues(newNumbers)
-            setGameOver(isGameOver(newNumbers));
-        }
+        newNumbers = addNewTiles(newNumbers)
+        setValues(newNumbers)
+        setGameOver(isGameOver(newNumbers) && !canSpawnNew);
         setScore(score + nextScore);
         props.setScore(score + nextScore);
     }
