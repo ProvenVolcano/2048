@@ -3,7 +3,7 @@ const ASSETS = [
     '/',
     '/index.html',
     '/manifest.json',
-    '/src'
+    '/icon2048.png'
 ];
 // instalace -- spouští se hned po stažení sw.js
 self.addEventListener('install', (event) => {
