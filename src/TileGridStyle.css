@@ -1,0 +1,136 @@
+:root {
+    --cell-size: 100px;
+    --gap: 10px;
+    --grid-bg: #bbada0;
+    --empty-tile: rgba(238, 228, 218, 0.45);
+    --tile-text-dark: #7d6456;
+
+    /*  dlaždiceeeeeee */
+    --tile-2:    #e0f7fa;
+    --tile-4:    #b2ebf2;
+    --tile-8:    #4dd0e1;
+    --tile-16:   #4fc3f7;
+    --tile-32:   #5c6bc0;
+    --tile-64:   #7e57c2;
+    --tile-128:  #9c27b0;
+    --tile-256:  #e91e63;
+    --tile-512:  #ff5252;
+    --tile-1024: #ff7043;
+    --tile-2048: #ffa726;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, var(--cell-size));
+    grid-template-rows: repeat(4, var(--cell-size));
+    gap: var(--gap);
+    padding: var(--gap);
+    background: var(--grid-bg);
+    border-radius: 6px;
+    width: auto;
+}
+
+.tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    font-size: 46px;
+    font-weight: 700;
+    transition: background-color 0.12s ease, color 0.12s ease;
+    user-select: none;
+}
+
+.tile-empty {
+    background: var(--empty-tile);
+}
+
+.tile-2 {
+    background: var(--tile-2);
+    color: var(--tile-text-dark);
+}
+
+.tile-4 {
+    background: var(--tile-4);
+    color: var(--tile-text-dark);
+}
+
+.tile-8 {
+    background: var(--tile-8);
+    color: #f9f6f2;
+}
+
+.tile-16 {
+    background: var(--tile-16);
+    color: #f9f6f2;
+}
+
+.tile-32 {
+    background: var(--tile-32);
+    color: #f9f6f2;
+}
+
+.tile-64 {
+    background: var(--tile-64);
+    color: #f9f6f2;
+}
+
+.tile-128 {
+    background: var(--tile-128);
+    color: #f9f6f2;
+    font-size: 40px;
+}
+
+.tile-256 {
+    background: var(--tile-256);
+    color: #f9f6f2;
+    font-size: 40px;
+}
+
+.tile-512 {
+    background: var(--tile-512);
+    color: #f9f6f2;
+    font-size: 40px;
+}
+
+.tile-1024 {
+    background: var(--tile-1024);
+    color: #f9f6f2;
+    font-size: 32px;
+}
+
+.tile-2048 {
+    background: var(--tile-2048);
+    color: #f9f6f2;
+    font-size: 32px;
+}
+
+.tile-super {
+    background: #3c3a32;
+    color: #f9f6f2;
+    font-size: 28px;
+}
+
+/*  menší dlaždice na mobilu */
+@media (max-width: 600px) {
+    :root {
+        --cell-size: 68px;
+        --gap: 8px;
+    }
+
+    .tile {
+        font-size: 34px;
+    }
+
+    .tile-128,
+    .tile-256,
+    .tile-512 {
+        font-size: 28px;
+    }
+
+    .tile-1024,
+    .tile-2048,
+    .tile-super {
+        font-size: 22px;
+    }
+}
