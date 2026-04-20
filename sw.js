@@ -3,8 +3,7 @@ const ASSETS = [
     '/',
     '/index.html',
     '/manifest.json',
-    '/src',
-    '/public/favicon.svg'
+    '/src'
 ];
 // instalace -- spouští se hned po stažení sw.js
 self.addEventListener('install', (event) => {
