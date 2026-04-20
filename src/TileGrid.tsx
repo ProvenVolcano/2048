@@ -117,7 +117,70 @@ function TileGrid(props: TileGridProps) {
         props.setScore(score + nextScore);
     }
 
+    const [touchStart, setTouchStart] = useState<{ x: number, y: number } | null>(null);
+
+// Minimální vzdálenost v pixelech, aby se pohyb počítal jako swipe
+    const minSwipeDistance = 40;
+
+    const onTouchStart = (e: React.TouchEvent) => {
+        console.log("t start")
+        setTouchStart({
+            x: e.targetTouches[0].clientX,
+            y: e.targetTouches[0].clientY
+        });
+    };
+
+    const onTouchEnd = (e: React.TouchEvent) => {
+
+        if (!touchStart) return;
+
+
+        const touchEndClientX = e.changedTouches[0].clientX;
+        const touchEndClientY = e.changedTouches[0].clientY;
+
+        const distanceX = touchEndClientX - touchStart.x;
+        const distanceY = touchEndClientY - touchStart.y;
+        let newNumbers: number[][] = [];
+        // Zjistíme, jestli byl pohyb spíše horizontální nebo vertikální
+        if (Math.abs(distanceX) > Math.abs(distanceY)) {
+
+            // Horizontální swipe
+            if (Math.abs(distanceX) > minSwipeDistance) {
+                if (distanceX > 0) {
+                    console.log("move right")
+                    newNumbers = moveHorizontal(false); // Swipe doprava
+                } else {
+                    console.log("move left")
+                    newNumbers = moveHorizontal(true);  // Swipe doleva
+                }
+            }
+        } else {
+
+            // Vertikální swipe
+            if (Math.abs(distanceY) > minSwipeDistance) {
+                if (distanceY > 0) {
+                    console.log("move down")
+                    newNumbers = moveVertical(false); // Swipe dolů
+                } else {
+                    console.log("move up")
+                    newNumbers = moveVertical(true);  // Swipe nahoru
+                }
+            }
+        }
+
+        setTouchStart(null); // Resetujeme počáteční pozici
+        newNumbers = addNewTiles(newNumbers)
+        setValues(newNumbers)
+        setGameOver(isGameOver(newNumbers) && !canSpawnNew);
+        if (!continuedAfterWin && hasWon(newNumbers)) {
+            setWon(true);
+        }
+        setScore(score + nextScore);
+        props.setScore(score + nextScore);
+    };
+
     function moveVertical(up: boolean) {
+        console.log("move vertical")
         const temp = values.map(row => [...row]);
         for (let i = 0; i < 4; i++) {
             const line: number[] = [];
@@ -202,7 +265,10 @@ function TileGrid(props: TileGridProps) {
 
     return (
         <>
-            <div className="grid">
+            <div className="grid" onTouchStart={onTouchStart}
+                 onTouchEnd={onTouchEnd}
+                 style={{ touchAction: 'none' }}>
+
                 {tiles.map((tile, index) => (
                     <Tile key={index} value={tile}/>
                 ))}
