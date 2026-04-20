@@ -2,7 +2,8 @@
   "short_name": "2048",
   "name": "Hra 2048",
   "icons": [{ "src": "icon2048.png", "sizes": "192x192" }],
-  "start_url": "/index.html",
+  "start_url": "/2048/",
+  "scope": "/2048/",
   "display": "standalone",
   "theme_color": "#2c3e50"
 }
