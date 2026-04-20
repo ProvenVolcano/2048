@@ -6,17 +6,17 @@
     --tile-text-dark: #7d6456;
 
     /*  dlaždiceeeeeee */
-    --tile-2: #eee4da;
-    --tile-4: #ede0c8;
-    --tile-8: #f2b179;
-    --tile-16: #f59563;
-    --tile-32: #f67c5f;
-    --tile-64: #f65e3b;
-    --tile-128: #edcf72;
-    --tile-256: #edcc61;
-    --tile-512: #edc850;
-    --tile-1024: #edc53f;
-    --tile-2048: #edc22e;
+    --tile-2:    #e0f7fa;
+    --tile-4:    #b2ebf2;
+    --tile-8:    #4dd0e1;
+    --tile-16:   #4fc3f7;
+    --tile-32:   #5c6bc0;
+    --tile-64:   #7e57c2;
+    --tile-128:  #9c27b0;
+    --tile-256:  #e91e63;
+    --tile-512:  #ff5252;
+    --tile-1024: #ff7043;
+    --tile-2048: #ffa726;
 }
 
 .grid {

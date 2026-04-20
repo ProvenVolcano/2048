@@ -32,11 +32,10 @@ function EndScreen(props: EndScreenProps) {
     return (
         <div className="overlay overlay-lost">
             <h2>HRA SKONČILA!</h2>
-            <p>Vaše finální skóre: {props.score}</p>
+            <p>Finální skóre: {props.score}</p>
             <button className="btn btn-primary" onClick={() => {
                 props.restartGame();
             }}>HRÁT ZNOVU</button>
-            <p className="small-text">Zkuste to znovu!</p>
         </div>
     )
 }

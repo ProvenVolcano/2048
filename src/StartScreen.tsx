@@ -20,7 +20,6 @@ function StartScreen(props: StartScreenProps) {
                 <p className="best-label">NEJLEPŠÍ SKÓRE</p>
                 <p className="best-value">♛ {bestScore}</p>
             </div>
-            <div className="footer-links">O HŘE &nbsp;/&nbsp; JAK HRÁT</div>
         </div>
     )
 }
